@@ -1,27 +1,31 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <suspense>
+    <div :class="$style.root">
+      Initial currencies are set in the global state
+      <EbCurrencyConverterWidget
+        :dataSource="dataSource"
+        :currencyFrom="userCurrency"
+        :currencyTo="toCurrency"
+      />
+    </div>
+    <template #fallback> Loading... </template>
+  </suspense>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+<script lang="ts" setup>
+import EbCurrencyConverterWidget from "@/components/EbCurrencyConverterWidget/EbCurrencyConverterWidget.vue";
+import { toCurrency, userCurrency } from "@/types/state";
+import { convert, getCurrencies, getLatest } from "@/api/ExchangeRate";
 
-export default defineComponent({
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-});
+const dataSource = {
+  getCurrencies: getCurrencies,
+  convert: convert,
+  getLatest: getLatest,
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style module>
+.root {
+  @apply flex flex-col justify-center items-center gap-6 p-3;
 }
 </style>

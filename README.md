@@ -1,4 +1,4 @@
-# eb-test
+¡# eb-test
 
 ## Project setup
 ```
@@ -15,7 +15,7 @@ yarn serve
 yarn build
 ```
 
-### Run your unit tests
+### Run your unit tests¡
 ```
 yarn test:unit
 ```
